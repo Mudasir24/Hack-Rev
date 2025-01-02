@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #2e7d32, #a5d6a7);
+            background: url('signg img.jpg') no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            perspective: 1500px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Top navigation menu (hidden by default) */
+        .topnav {
+            height: 60px; /* Adjust the height of the top navigation */
+            width: 100%;
+            position: fixed;
+            top: -60px; /* Start off-screen at the top */
+            left: 0;
+            background-color: rgba(46, 125, 50, 0.7);
+            overflow: hidden;
+            transition: 0.5s;
+            z-index: 9999;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.5);
+
+            /* Use Flexbox to center items horizontally */
+            display: flex;
+            justify-content: center; /* Centers the links horizontally */
+            align-items: center; /* Centers the links vertically */
+        }
+
+        .topnav a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: inline-block;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .topnav a:hover {
+            color: #81c784;
+        }
+
+        .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+            color: white;
+        }
+
+        #main {
+            transition: margin-top .5s;
+            padding: 20px;
+        }
+
+        .openbtn {
+            font-size: 20px;
+            background-color: #2e7d32;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px 20px;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            border-radius: 5px;
+        }
+
+        .openbtn:hover {
+            background-color: #388e3c;
+        }
+
+        body.topnav-open {
+            overflow: hidden;
+        }
+
+        .background-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: url('your-waste-management-background.jpg') no-repeat center center/cover;
+            background-size: cover;
+            filter: brightness(0.6);
+            transition: background-position 0.3s ease;
+            transform: translateZ(-1px) scale(2); /* Create a parallax effect */
+        }
+
+        /* Content container */
+        .content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        /* Login Container (with fade-in and floating animation) */
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            padding: 20px 30px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideIn 0.8s ease-out forwards, float 3s ease-in-out infinite ;
+            
+        }
+
+        /* Floating Animation */
+        @keyframes float {
+             0%, 100% {
+               transform: translateY(0);
+              }
+             50% {
+               transform: translateY(-15px);
+              }
+            }
+
+        @keyframes slideIn {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            60% {
+                opacity: 1;
+                transform: translateY(-10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-container h1 {
+            color: #2e7d32;
+            margin-bottom: 20px;
+        }
+
+        .login-container form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .login-container input {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .login-container input:focus {
+            box-shadow: 0 0 10px rgba(0, 128, 0, 0.8);
+            transform: scale(1.05);
+            outline: none;
+        }
+
+        .login-container button {
+            background: linear-gradient(135deg, #43a047, #66bb6a);
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .login-container button:hover {
+            transform: scale(1.1);
+            background-color: #388e3c;
+        }
+
+        .login-container .links {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .login-container .links a {
+            color: #2e7d32;
+            text-decoration: none;
+        }
+
+        .login-container .links a:hover {
+            text-decoration: underline;
+        }
+
+        .loading-spinner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4caf50;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .login-container.fadeOut {
+            animation: fadeOut 0.8s ease-in-out forwards;
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Text Section with fade-in animation */
+        .motivational-text {
+            font-size: 18px;
+            color: #fff;
+            max-width: 500px;
+            line-height: 1.6;
+            font-weight: 300;
+            text-align: left;
+            padding: 20px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.6);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            transform: translateX(-30px);
+            animation: fadeInText 1s ease-out forwards, float 3s ease-in-out infinite;
+        }
+
+        /* Floating Animation */
+            @keyframes float {
+             0%, 100% {
+               transform: translateY(0);
+              }
+             50% {
+               transform: translateY(-15px);
+              }
+            }
+
+        @keyframes fadeInText {
+            0% {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .motivational-text h2 {
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .motivational-text p {
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .motivational-text:hover {
+            background: rgba(0, 128, 0, 0.7);
+            transform: scale(1.02);
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .motivational-text h2:hover {
+            color: #4caf50;
+        }
+
+        .motivational-text p:hover {
+            color: #81c784;
+        }
+
+        @media (max-width: 768px) {
+    .login-container {
+        width: 90%; /* Adjust form width for smaller screens */
+        max-width: 400px; /* Keeps the form size reasonable */
+    }
+    .motivational-text {
+        font-size: 16px; /* Adjust text size */
+    }
+}
+
+        /* Login Button Hover Animation */
+        .login-container button {
+            background: linear-gradient(135deg, #43a047, #66bb6a);
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .login-container button:hover {
+            transform: scale(1.1);
+            background-color: #388e3c;
+        }
+
+        /* Input Focus Animation */
+        .login-container input:focus {
+            box-shadow: 0 0 10px rgba(0, 128, 0, 0.8);
+            transform: scale(1.05);
+            outline: none;
+        }
+
+        /* Forgot Password and SignUp Link */
+        .login-container .links {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .login-container .links a {
+            color: #2e7d32;
+            text-decoration: none;
+        }
+
+        .login-container .links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Remember Me Checkbox */
+        .remember-me {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .remember-me input {
+            margin-right: 10px;
+        }
+
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #2d2d2d;
+            color: #fff;
+        }
+
+        body.dark-mode .login-container {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        body.dark-mode .motivational-text {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        /* Disable button state */
+        button:disabled {
+            background-color: #888;
+            cursor: not-allowed;
+        }
+
+        /* Footer Styles */
+        .footer {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 14px;
+            z-index: 100;
+            box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .footer a {
+            color: #81c784;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Optional styles for responsiveness */
+        @media (max-width: 768px) {
+            .footer {
+                font-size: 12px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Open Top Navigation Button -->
+    <button class="openbtn" onclick="openNav()">☰ Open Menu</button>
+
+    <!-- Top Navigation -->
+    <div id="myTopnav" class="topnav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <a href="#">Home</a>
+        <a href="login.html">Login | Sign Up</a>
+        <a href="#">About Us</a>
+    </div>
+
+    <!-- 3D Animated Background -->
+    <div class="background-animation"></div>
+
+    <!-- Main content (login form and motivational paragraph) -->
+    <div class="content">
+
+        <!-- Motivational Text Section -->
+        <div class="motivational-text">
+            <h2>Let's Make the Planet Cleaner Together</h2>
+            <p>Join us in revolutionizing waste management by making a small change in your routine. Every effort counts. Let's take action and keep our world clean.</p>
+        </div>
+
+        <!-- Login Form -->
+        <div class="login-container">
+            <h1>Welcome Back!</h1>
+            <form id="login-form">
+                <input type="text" id="username" placeholder="Username" autocomplete="off" autofocus required>
+                <input type="password" id="password" placeholder="Password" required>
+                <span class="password-toggle" id="password-toggle">&#x1F441;</span> <!-- Eye icon for password visibility -->
+            
+            <!-- Remember Me Checkbox -->
+            <div class="remember-me">
+                <input type="checkbox" id="remember-me">
+                <label for="remember-me">Remember Me</label>
+            </div>
+
+            <button type="submit">Login</button>
+        </form>
+        <div class="links">
+            <a href="#">Forgot Password?</a> | <a href="su.html">Sign Up</a>
+        </div>
+
+            <!-- Spinner inside the form -->
+            <div class="loading-spinner" style="display: none;">
+                <div class="spinner"></div>
+            </div>
+        </div>
+
+    </div>
+    <!-- Dynamic Footer -->
+    <footer class="footer">
+        <p>&copy; <span id="year"></span> Waste Management Initiative. All rights reserved.</p>
+        <p>Created with ♥ for a cleaner planet. <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Toggle Dark Mode
+        const toggleDarkMode = () => {
+            document.body.classList.toggle('dark-mode');
+        };
+
+        // Topnav functions
+        function openNav() {
+            document.getElementById("myTopnav").style.top = "0";  /* Slide down */
+        }
+
+        function closeNav() {
+            document.getElementById("myTopnav").style.top = "-60px"; /* Slide up */
+        }
+
+        // Toggle Password Visibility
+        const passwordField = document.getElementById('password');
+        const passwordToggle = document.getElementById('password-toggle');
+
+        passwordToggle.setAttribute('aria-label', 'Show/Hide password');
+        passwordToggle.addEventListener('click', function() {
+            const type = passwordField.type === 'password' ? 'text' : 'password';
+            passwordField.type = type;
+            passwordToggle.innerHTML = type === 'password' ? '&#x1F441;' : '&#x1F576;';
+        });
+
+        // Form submission
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Show loading spinner
+            document.querySelector('.loading-spinner').style.display = 'flex';
+
+            // Simulate a login request
+            setTimeout(() => {
+                // Hide spinner after 2 seconds
+                document.querySelector('.loading-spinner').style.display = 'none';
+
+                // For demonstration purposes, show a success message and clear form
+                alert("Login successful!");
+                document.getElementById('login-form').reset();
+            }, 2000); // simulate network delay of 2 seconds
+        });
+
+         // Parallax Scroll Effect for Background
+         window.addEventListener('scroll', function () {
+            const scrolled = window.pageYOffset;
+            document.querySelector('.background-animation').style.transform = `translateZ(-1px) scale(2) translateY(${scrolled * 0.5}px)`;
+        });
+
+        // Dynamic Year for Footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+    </script>
+
+</body>
+</html>
+

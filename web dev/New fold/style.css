@@ -1,0 +1,189 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a1a1a, #2d3748);
+    color: white;
+    padding: 3rem 1rem;
+}
+
+.container {
+    max-width: 1024px;
+    margin: 0 auto;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.gradient-text-1 {
+    background: linear-gradient(to right, #4ade80, #2dd4bf);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.gradient-text-2 {
+    background: linear-gradient(to right, #2dd4bf, #4ade80);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.home-btn {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(45, 55, 72, 0.8);
+    border: 1px solid #4a5568;
+    border-radius: 9999px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.home-btn:hover {
+    background: rgb(45, 55, 72);
+}
+
+.carousel {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
+}
+
+.carousel-inner {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.slide {
+    min-width: 100%;
+    padding: 0 1rem;
+}
+
+.card {
+    background: #2d3748;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    border: 1px solid #4a5568;
+}
+
+.image-container {
+    position: relative;
+    height: 200px;
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.icon {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.6);
+    font-size: 3rem;
+}
+
+.content {
+    padding: 1.5rem;
+}
+
+.content h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.content p {
+    color: #cbd5e0;
+    margin-bottom: 1rem;
+}
+
+.content ul {
+    list-style: none;
+}
+
+.content li {
+    display: flex;
+    align-items: center;
+    color: #cbd5e0;
+    margin-bottom: 0.5rem;
+}
+
+.content li::before {
+    content: "";
+    display: block;
+    width: 6px;
+    height: 6px;
+    background: #4ade80;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(45, 55, 72, 0.8);
+    border: 1px solid #4a5568;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.carousel-btn:hover {
+    background: rgb(45, 55, 72);
+}
+
+.prev {
+    left: 1rem;
+}
+
+.next {
+    right: 1rem;
+}
+
+.carousel-dots {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.5rem;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #4a5568;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.dot.active {
+    background: #4ade80;
+}

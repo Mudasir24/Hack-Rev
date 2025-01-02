@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #2e7d32, #a5d6a7);
+            background: url('login img.png') no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            perspective: 2000px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Adding 3D animation and depth effect to the background */
+        .background-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: url('signg img.jpg') no-repeat center center/cover;
+            transform: translateZ(-1000px) scale(1.5); /* Creates a 3D-like distance */
+            animation: moveBackground 10s infinite linear;
+            transform-style: preserve-3d;
+            filter: brightness(0.6); /* Dim the background for better focus on the form */
+        }
+
+        @keyframes moveBackground {
+            0% {
+                background-position: 0% 0%;
+            }
+            100% {
+                background-position: 100% 100%;
+            }
+        }
+
+
+        .signup-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            padding: 20px 30px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            transform: rotateX(0deg) rotateY(0deg);
+            animation: float 5s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: rotateX(0deg) rotateY(0deg);
+            }
+            50% {
+                transform: rotateX(5deg) rotateY(5deg);
+            }
+        }
+
+        .signup-container h1 {
+            color: #2e7d32;
+            margin-bottom: 20px;
+        }
+
+        .signup-container form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .signup-container input {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .signup-container button {
+            background: linear-gradient(135deg, #43a047, #66bb6a);
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .signup-container button:hover {
+            transform: scale(1.1);
+            background-color: #388e3c;
+        }
+
+        .signup-container .links {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .signup-container .links a {
+            color: #2e7d32;
+            text-decoration: none;
+        }
+
+        .signup-container .links a:hover {
+            text-decoration: underline;
+        }
+
+        .popup-nav {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+            text-align: center;
+        }
+
+        .popup-nav a {
+            display: block;
+            padding: 10px;
+            color: #2e7d32;
+            text-decoration: none;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .popup-nav a:hover {
+            text-decoration: underline;
+        }
+
+        .popup-nav button {
+            background-color: #2e7d32;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+
+        .popup-nav button:hover {
+            background-color: #388e3c;
+        }
+
+        .open-nav-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: #2e7d32;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .open-nav-btn:hover {
+            background-color: #388e3c;
+        }
+
+        .background-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(0,128,0,0.1) 50%, rgba(255,255,255,0) 70%);
+            animation: moveBackground 10s infinite linear;
+        }
+
+        @keyframes moveBackground {
+            0% {
+                background-position: 0% 0%;
+            }
+            100% {
+                background-position: 100% 100%;
+            }
+        } 
+    </style>
+</head>
+<body>
+    
+    <div class="background-animation"></div>
+    <div class="signup-container">
+        <h1>Create Account</h1>
+        <form id="signup-form">
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <input type="password" id="confirm-password" placeholder="Confirm Password" required>
+            <button type="submit">Sign Up</button>
+        </form>
+        <div class="links">
+            <a href="lo.html">Already have an account? Login</a>
+        </div>
+    </div>
+
+    <div class="popup-nav" id="popup-nav">
+        <a href="#home">Home</a>
+        <a href="lo.html">Login</a>
+        <a href="#about-us">About Us</a>
+        <button onclick="closeNav()">Close</button>
+    </div>    <!-- Popup Navigation -->
+
+    <!-- Button to open the popup nav -->
+    <button class="open-nav-btn" onclick="openNav()">Menu</button>
+
+
+    <script>
+        const form = document.getElementById('signup-form');
+        const popupNav = document.getElementById('popup-nav');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent page reload
+
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            if (username && email && password && confirmPassword) {
+                if (password === confirmPassword) {
+                    alert(`Welcome, ${username}! Your account has been created.`);
+                } else {
+                    alert('Passwords do not match. Please try again.');
+                }
+            } else {
+                alert('Please fill in all fields.');
+            }
+        });
+
+      // Function to open the popup nav
+      function openNav() {
+            popupNav.style.display = 'block';
+            popupNav.style.top='0'; //ensuress it's visible from top
+        }
+
+        // Function to close the popup nav
+        function closeNav() {
+            popupNav.style.display = 'none';
+        }  
+
+    </script>
+</body>
+</html>
